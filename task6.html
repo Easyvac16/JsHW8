@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation of train tickets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffc353;
+        }
+
+        form {
+            display: flex;
+            text-align: left;
+            justify-content: center;
+            flex-direction: column;
+            width: 40%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #seatSelection {
+            display: none;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            background-color: #fcbb42;
+            border: 1px solid black;
+        }
+
+        #seatSelectionForm {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #seatSelectionForm input {
+            margin: 5px;
+        }
+
+        #bookedTickets {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #bookedTickets li {
+            margin: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        #direction {
+            margin-bottom: 10px;
+        }
+
+        #btnBook {
+            margin-top: 10px;
+            height: 40px;
+        }
+
+        #dateError {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Reservation of train tickets</h2>
+
+    <form id="bookingForm" onsubmit="return validateDate()">
+        <label for="direction">The direction of the train:</label>
+        <select id="direction" name="direction">
+            <option value="Kyiv-Lviv">Kyiv-Lviv</option>
+            <option value="Lviv-Kyiv">Lviv-Kyiv</option>
+        </select>
+
+        <label for="date">Date of trip:</label>
+        <input type="date" id="date" name="date" required>
+
+        <button type="submit">Search for places</button>
+        <p id="dateError"></p>
+    </form>
+
+    <div id="seatSelection">
+        <h2>Select places to book</h2>
+        <form id="seatSelectionForm">
+            <input type="checkbox" id="seat1" name="seat" value="1">
+            <label for="seat1">Place 1</label>
+
+            <input type="checkbox" id="seat2" name="seat" value="2">
+            <label for="seat2">Place 2</label>
+
+            <input type="checkbox" id="seat3" name="seat" value="3">
+            <label for="seat3">Place 3</label>
+
+            <input type="checkbox" id="seat4" name="seat" value="4">
+            <label for="seat4">Place 4</label>
+
+            <input type="checkbox" id="seat5" name="seat" value="5">
+            <label for="seat5">Place 5</label>
+
+            <input type="checkbox" id="seat6" name="seat" value="6">
+            <label for="seat6">Place 6</label>
+
+            <button type="button" id="btnBook" onclick="bookTickets()">Book tickets</button>
+        </form>
+    </div>
+
+    <h2>Booked tickets</h2>
+    <ul id="bookedTickets"></ul>
+
+    <a href="task1.html">Task 1</a>
+    <a href="task2.html">Task 2</a>
+    <a href="task3.html">Task 3</a>
+    <a href="task4.html">Task 4</a>
+    <a href="task5.html">Task 5</a>
+
+    <script>
+        let bookedTickets = [];
+
+        function validateDate() {
+            const dateInput = document.getElementById('date');
+            const dateError = document.getElementById('dateError');
+            const currentDate = new Date();
+            const selectedDate = new Date(dateInput.value);
+
+            if (selectedDate < currentDate) {
+                dateError.textContent = 'Please select a date in the future.';
+                return false;
+            } else {
+                dateError.textContent = '';
+                showSeatSelection();
+                return false;
+            }
+        }
+
+        function showSeatSelection() {
+            const seatSelection = document.getElementById('seatSelection');
+            seatSelection.style.display = 'flex';
+            seatSelection.style.flexDirection = 'column';
+            seatSelection.style.alignItems = 'center';
+
+            // Затримка перед відображенням за допомогою setTimeout
+            setTimeout(() => {
+                seatSelection.style.opacity = '1';
+            }, 100);
+        }
+
+        function scrollToElement(element) {
+            window.scrollTo({
+                behavior: 'smooth',
+                top: element.offsetTop
+            });
+        }
+
+        function bookTickets() {
+            const direction = document.getElementById('direction').value;
+            const date = document.getElementById('date').value;
+            const selectedSeats = Array.from(document.querySelectorAll('input[name="seat"]:checked')).map(seat => seat.value);
+
+            bookedTickets.push({ direction, date, seats: selectedSeats });
+
+            const bookedTicketsList = document.getElementById('bookedTickets');
+            const newTicketItem = document.createElement('li');
+            newTicketItem.textContent = `Direction: ${direction}, Date: ${date}, Places: ${selectedSeats.join(', ')}`;
+            bookedTicketsList.appendChild(newTicketItem);
+        }
+    </script>
+</body>
+
+</html>

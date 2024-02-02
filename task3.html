@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        #textForm {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        #styledText {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: normal;
+            color: blue;
+            text-decoration: none;
+            font-style: normal;
+            text-align: left;
+        }
+
+        #inputTextArea {
+            width: 100%;
+            height: 100px;
+            font-size: 18px;
+            font-weight: normal;
+            color: blue;
+            text-decoration: none;
+            font-style: normal;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Styled Text Page</h2>
+
+    <form id="textForm" onsubmit="return false;">
+        <label for="inputTextArea">Enter Text:</label>
+        <textarea id="inputTextArea" name="inputTextArea" required></textarea>
+        <br><br>
+        <label for="fontSize">Font Size:</label>
+        <input type="number" id="fontSize" name="fontSize" min="10" max="36" value="18">
+        <br><br>
+        <label for="fontWeight">Font Weight:</label>
+        <select id="fontWeight" name="fontWeight">
+            <option value="normal">Normal</option>
+            <option value="bold">Bold</option>
+        </select>
+        <br><br>
+        <label for="fontStyle">Font Style:</label>
+        <select id="fontStyle" name="fontStyle">
+            <option value="normal">Normal</option>
+            <option value="underline">Underline</option>
+            <option value="italic">Italic</option>
+        </select>
+        <br><br>
+        <label for="textAlign">Text Align:</label>
+        <select id="textAlign" name="textAlign">
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="justify">Justify</option>
+        </select>
+        <br><br>
+        <label for="fontColor">Font Color:</label>
+        <input type="color" id="fontColor" name="fontColor" value="#0000ff">
+        <br><br>
+        <button onclick="applyStyles()">Apply Styles</button>
+    </form>
+
+    <div id="styledText"></div>
+    <a href="task1.html">Task 1</a>
+    <a href="task2.html">Task 2</a>
+    <a href="task4.html">Task 4</a>
+    <a href="task5.html">Task 5</a>
+    <a href="task6.html">Task 6</a>
+
+    <script>
+        function applyStyles() {
+            const inputTextArea = document.getElementById('inputTextArea');
+            const fontSize = document.getElementById('fontSize').value + 'px';
+            const fontWeight = document.getElementById('fontWeight').value;
+            const fontStyle = document.getElementById('fontStyle').value;
+            const textAlign = document.getElementById('textAlign').value;
+            const fontColor = document.getElementById('fontColor').value;
+
+            inputTextArea.style.fontSize = fontSize;
+            inputTextArea.style.fontWeight = fontWeight;
+            inputTextArea.style.textDecoration = (fontStyle === 'underline') ? 'underline' : 'none';
+            inputTextArea.style.fontStyle = (fontStyle === 'italic') ? 'italic' : 'normal';
+            inputTextArea.style.textAlign = textAlign;
+            inputTextArea.style.color = fontColor;
+        }
+    </script>
+</body>
+
+</html>

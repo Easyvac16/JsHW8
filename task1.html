@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        #messageList {
+            width: 80%;
+            margin: 20px auto;
+            text-align: left;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        #messageForm {
+            width: 80%;
+            margin: 20px auto;
+            text-align: left;
+        }
+
+        #messageForm label,
+        #messageForm textarea,
+        #messageForm button {
+            margin-bottom: 10px;
+        }
+
+        #userMessage {
+            height: 21px;
+            width: 100%;
+        }
+
+        #userName {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Forum Page</h2>
+
+    <div id="messageList">
+        <h3>Messages</h3>
+        <ul id="messages"></ul>
+    </div>
+
+    <div id="messageForm">
+        <h3>Add a New Message</h3>
+        <form id="addMessageForm" onsubmit="addMessage(event)">
+            <label for="userName">Your Name:</label>
+            <input type="text" id="userName" required><br>
+
+            <label for="userMessage">Your Message:</label>
+            <textarea id="userMessage" rows="4" required></textarea>
+
+            <button type="submit">Add Message</button>
+        </form>
+    </div>
+    <a href="task2.html">Task 2</a>
+    <a href="task3.html">Task 3</a>
+    <a href="task4.html">Task 4</a>
+    <a href="task5.html">Task 5</a>
+    <a href="task6.html">Task 6</a>
+
+    <script>
+        function addMessage(event) {
+            event.preventDefault();
+
+            const userName = document.getElementById('userName').value;
+            const userMessage = document.getElementById('userMessage').value;
+
+            if (userName && userMessage) {
+                const messagesList = document.getElementById('messages');
+                const newMessageItem = document.createElement('li');
+                newMessageItem.innerHTML = `<strong>${userName}:</strong> ${userMessage}`;
+                messagesList.appendChild(newMessageItem);
+
+                document.getElementById('userName').value = '';
+                document.getElementById('userMessage').value = '';
+            } else {
+                alert('Please enter both your name and message.');
+            }
+        }
+    </script>
+</body>
+
+</html>

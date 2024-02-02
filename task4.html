@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        #bookList {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+
+        .book {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            width: 450px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        img {
+            max-height: 250px;
+        }
+
+        #orderForm {
+            width: 20%;
+            margin: 0 auto;
+            text-align: left;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+        }
+
+        #orderSummary {
+            margin-top: 30px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Книжковий магазин</h2>
+
+    <div class="container">
+        <div id="bookList">
+            <div class="book" data-title="Metro 2033">
+                <img src="https://content2.rozetka.com.ua/goods/images/big/334745545.jpg" alt="book1">
+                <p>Metro 2033</p>
+                <p>Cost: $20</p>
+                <p>Describtion:Двадцять років по Третій світовій війні. Ті, хто вижив, ховаються на станціях і в тунелях
+                    московського метро — найбільшого на Землі протиатомного бомбосховища. Поверхня планети заражена й
+                    непридатна для життя, тож станції метро стали останнім притулком для людських істот, з часом
+                    перетворившись на незалежні міста-держави, які змагаються й воюють між собою. Люди не готові
+                    примиритися між собою навіть за появи ще страшнішої небезпеки, яка загрожує повним винищенням.
+                    Артем, двадцятилітній хлопець зі станції ВДНГ, повинен пройти через усе метро, щоби врятувати свій
+                    єдиний дім, а відтак і рештки людства.
+                    «Метро 2033» — культовий роман-антиутопія, один зі знакових бестселерів початку ХХІ століття: 38
+                    мов, мільйонні наклади, екранізації, атмосферні комп'ютерні блокбастери, цілий книжковий всесвіт і
+                    справжня молодіжна субкультура.</p>
+                <button onclick="selectBook(this)">Select</button>
+            </div>
+            <div class="book" data-title="Metro 2034">
+                <img src="https://content.rozetka.com.ua/goods/images/big/334745994.jpg" alt="book2">
+                <p>Metro 2034</p>
+                <p>Cost: $25</p>
+                <p>Describtion:Кінець світу.
+                    Продовження історії.
+                    Не минуло й року після пам'ятних подій на станції ВДНГ, про що йшлося у попередній частині трилогії
+                    «Метро 2033», як рештки людства стикаються з новими опасностями.
+                    На цей раз об'єктом безнастанних нападів монстрів стає «Севастопольська» – найпівденніша станція.
+                    Частка станції та її мешканців залежить від постачання боєприпасів, які несподівано припиняються:
+                    відправлені каравани безслідно зникають, а зв'язок переривається. Задля з'ясування причин цієї біди
+                    і відновлення поставок у смертельно небезпечну дорогу вирушають юний Ахмед, пристаркуватий і
+                    потаємничий літописець метро Гомер і таємничий та безжальний бригадир Хантер, який безслідно зник
+                    під
+                    час війни з чорними, а нещодавно з'явився знову; згодом до експедиції приєднується ще й Сашко,
+                    донька колишнього коменданта «Автозаводської». Шанси на повернення у них майже нульові.
+                    «Метро 2034» — культовий роман-антиутопія, один із знакових бестселерів початку ХХІ століття: 38
+                    мов, мільйонні наклади, екранізації...</p>
+                <button onclick="selectBook(this)">Select</button>
+            </div>
+            <div class="book" data-title="Metro 2035">
+                <img src="https://content2.rozetka.com.ua/goods/images/big/334744394.png" alt="book3">
+                <p>Metro 2035</p>
+                <p>cost: $18</p>
+                <p>Describtion:СВІТЛО МИНУЛО. ТЕМНІ БУДУЩЕ. Третя світова війна стерла людство з лиця Землі. Планета
+                    спорожніла. Мегаполіси перетворилися на порох і попіл. Залізниці іржавіють. Радіо мовчить на всіх
+                    частотах. Вижили тільки ті, хто, почувши бузок тривоги, встигли добігти до дверей московського
+                    метро. Там, на підземних станціях та в тунелях, люди намагаються перечекати кінець світу. Створивши
+                    натомість втраченого свій маленький світ, вони чіпляються за життя з усіх сил і відмовляються
+                    здаватися. Проте лише одиниці мріють повернутись нагору і не втрачають надії знайти інших
+                    уцілілих... «Метро 2035» продовжує — і завершує — історію Артема з першої книги трилогії. Цю книгу
+                    мільйони читачів чекали довгі десять років, і права на переклад іноземні видавці викупили задовго до
+                    того, як роман був закінчений. При цьому «2035» — книга самостійна, і саме з неї можна почати
+                    знайомство із сагою, що підкорила весь світ.</p>
+                <button onclick="selectBook(this)">Select</button>
+            </div>
+        </div>
+
+        <form id="orderForm">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1" required><br>
+
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="deliveryDate">Delivery date:</label>
+            <input type="date" id="deliveryDate" name="deliveryDate" min="<?php echo date('Y-m-d'); ?>" required><br>
+
+            <label for="deliveryAddress">Delivery addres:</label>
+            <input type="text" id="deliveryAddress" name="deliveryAddress" required><br>
+
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="4"></textarea><br>
+
+            <button type="button" onclick="submitOrder()">Buy</button>
+        </form>
+    </div>
+
+    <div id="orderSummary"></div>
+
+    <a href="task1.html">Task 1</a>
+    <a href="task2.html">Task 2</a>
+    <a href="task3.html">Task 3</a>
+    <a href="task5.html">Task 5</a>
+    <a href="task6.html">Task 6</a>
+
+    <script>
+        let book;
+
+        function selectBook(button) {
+            const bookDiv = button.parentNode;
+            const selectedBookTitle = bookDiv.getAttribute('data-title');
+            book = selectedBookTitle;
+        }
+
+        function submitOrder() {
+            const quantity = document.getElementById('quantity').value;
+            const name = document.getElementById('name').value;
+            const deliveryDate = document.getElementById('deliveryDate').value;
+            const deliveryAddress = document.getElementById('deliveryAddress').value;
+            const comment = document.getElementById('comment').value;
+
+            const currentDate = new Date().toISOString().split('T')[0];
+            if (deliveryDate < currentDate) {
+                alert('The date cannot be in the past.');
+                return;
+            }
+
+            const orderSummary = document.getElementById('orderSummary');
+            orderSummary.innerHTML = `
+                <p>${name}, thank you for your order.</p>
+                <p>"${book}" product quantity  ${quantity} copy(s) will be delivered to: ${deliveryAddress} ${deliveryDate}</p>
+                <p>Comment: ${comment}</p>
+            `;
+        }
+    </script>
+</body>
+
+</html>

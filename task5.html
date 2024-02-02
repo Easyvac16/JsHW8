@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+        }
+
+        input[type="text"],
+        select {
+            margin-bottom: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Attendance Marking for Classes</h2>
+
+    <form action="" onsubmit="markAttendance(); return false;">
+        <label for="group">Group:</label>
+        <select id="group" name="group" onchange="updateLectureCount()" required>
+            <option value="group1">Group 1</option>
+            <option value="group2">Group 2</option>
+        </select><br>
+
+        <label for="lecture">Lecture:</label>
+        <select id="lecture" name="lecture" required></select><br>
+
+        <label for="topic">Lesson Topic:</label>
+        <input type="text" id="topic" name="topic" required><br>
+
+        <fieldset id="studentsCheckboxList">
+        </fieldset>
+
+        <button type="submit">Save Attendance</button>
+    </form>
+
+    <table id="attendanceTable">
+        <thead>
+            <tr>
+                <th>Group</th>
+                <th>Lecture</th>
+                <th>Topic</th>
+                <th>Present Students</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <a href="task1.html">Task 1</a>
+    <a href="task2.html">Task 2</a>
+    <a href="task3.html">Task 3</a>
+    <a href="task4.html">Task 4</a>
+    <a href="task6.html">Task 6</a>
+
+    <script>
+
+        let editingIndex = null;
+
+        const studentsList = {
+            group1: ["Student1", "Student2", "Student3"],
+            group2: ["Student4", "Student5", "Student6"]
+        };
+
+        const lectureCounts = {
+            group1: 3,
+            group2: 4
+        };
+
+        const attendanceDataKey = 'attendanceData';
+        let attendanceData = JSON.parse(localStorage.getItem(attendanceDataKey)) || [];
+
+
+        function markAttendance() {
+            const groupSelect = document.getElementById('group');
+            const lectureSelect = document.getElementById('lecture');
+            const topicInput = document.getElementById('topic');
+            const checkboxes = document.querySelectorAll(`input[name="student_${groupSelect.value}"]:checked`);
+
+            const group = groupSelect.value;
+            const lecture = lectureSelect.value;
+            const topic = topicInput.value;
+
+            /* if (topic.trim() === '') {
+                topicInput.style.border = 2 + 'px' + ' ' + 'solid' + ' ' + 'red';
+                return;
+            }
+            else {
+                topicInput.style.border = '';
+
+            } */
+
+            const present = [];
+            checkboxes.forEach(checkbox => {
+                present.push(checkbox.value);
+            });
+
+            attendanceData.push({
+                group: group,
+                lecture: lecture,
+                topic: topic,
+                present: present
+            });
+
+            localStorage.setItem(attendanceDataKey, JSON.stringify(attendanceData));
+
+            groupSelect.value = 'group1';
+
+
+            lectureSelect.value = 1;
+            topicInput.value = '';
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            displayAttendanceData();
+
+            editingIndex = null;
+        }
+
+
+        function displayAttendanceData() {
+            const tableBody = document.querySelector('#attendanceTable tbody');
+
+            if (tableBody) {
+                tableBody.innerHTML = '';
+
+                attendanceData.forEach((data, index) => {
+                    const row = tableBody.insertRow();
+                    row.insertCell().textContent = data.group;
+                    row.insertCell().textContent = data.lecture;
+                    row.insertCell().textContent = data.topic;
+                    const presentCell = row.insertCell();
+
+                    data.present.forEach(name => {
+                        presentCell.appendChild(document.createTextNode(name));
+                        presentCell.appendChild(document.createElement('br'));
+                    });
+
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.addEventListener('click', () => editAttendance(index));
+                    row.insertCell().appendChild(editButton);
+                });
+            } else {
+                console.error("Element #attendanceTable tbody not found.");
+            }
+        }
+
+        function editAttendance(index) {
+
+            if (editingIndex !== null) {
+                alert('Please finish editing the current entry before editing another.');
+                return;
+            }
+
+            editingIndex = index;
+
+            const dataToEdit = attendanceData[index];
+
+            document.getElementById('group').value = dataToEdit.group;
+            document.getElementById('lecture').value = dataToEdit.lecture;
+            document.getElementById('topic').value = dataToEdit.topic;
+
+            const students = studentsList[dataToEdit.group];
+
+            students.forEach(student => {
+                const checkbox = document.querySelector(`#studentsCheckboxList input[value="${student}"]`);
+                if (checkbox) {
+                    checkbox.checked = dataToEdit.present.includes(student);
+                }
+            });
+
+            attendanceData.splice(index, 1);
+
+            displayAttendanceData();
+        }
+
+        function generateStudentCheckboxes() {
+            const groupSelect = document.getElementById('group');
+
+            if (groupSelect) {
+                const selectedGroup = groupSelect.value;
+
+                const studentsCheckboxList = document.getElementById('studentsCheckboxList');
+                studentsCheckboxList.innerHTML = '';
+
+                const students = studentsList[selectedGroup];
+                students.forEach(student => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = `student_${selectedGroup}`;
+                    checkbox.value = student;
+                    studentsCheckboxList.appendChild(checkbox);
+                    studentsCheckboxList.appendChild(document.createTextNode(student));
+                    studentsCheckboxList.appendChild(document.createElement('br'));
+                });
+
+                const lastAttendance = attendanceData[attendanceData.length - 1];
+                if (lastAttendance && lastAttendance.group === selectedGroup) {
+                    lastAttendance.present.forEach(student => {
+                        const checkbox = studentsCheckboxList.querySelector(`input[value="${student}"]`);
+                        if (checkbox) {
+                            checkbox.checked = true;
+                        }
+                    });
+                }
+            }
+        }
+
+        function updateLectureCount() {
+            const groupSelect = document.getElementById('group');
+            const lectureSelect = document.getElementById('lecture');
+
+            if (groupSelect && lectureSelect) {
+                const selectedGroup = groupSelect.value;
+                const lectureCount = lectureCounts[selectedGroup];
+
+                lectureSelect.innerHTML = '';
+
+                for (let i = 1; i <= lectureCount; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = `Lecture ${i}`;
+                    lectureSelect.appendChild(option);
+                }
+            }
+        }
+        generateStudentCheckboxes();
+        updateLectureCount();
+
+        displayAttendanceData();
+    </script>
+
+</body>
+
+</html>

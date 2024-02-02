@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        #quizContainer {
+            width: 80%;
+            margin: 20px auto;
+            text-align: left;
+        }
+
+        .question {
+            margin-bottom: 10px;
+        }
+
+        .options {
+            margin-left: 20px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Quiz Page</h2>
+
+    <form id="quizForm">
+        <div id="quizContainer">
+            <div class="question">
+                <p>1. What is the capital of France?</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="Paris"> Paris
+                    <input type="radio" name="q1" value="Berlin"> Berlin
+                </div>
+            </div>
+
+            <div class="question">
+                <p>2. Which planet is known as the Red Planet?</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="Earth"> Earth
+                    <input type="radio" name="q2" value="Mars"> Mars
+                </div>
+            </div>
+
+            <div class="question">
+                <p>3. What the best part of the counter strike</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="cs 1.6"> Cs 1.6
+                    <input type="radio" name="q3" value="CS GO"> CS GO
+                </div>
+            </div>
+
+            <button type="button" onclick="submitQuiz()">Submit Quiz</button>
+
+            <div id="result"></div>
+        </div>
+    </form>
+    <a href="task1.html">Task 1</a>
+    <a href="task3.html">Task 3</a>
+    <a href="task4.html">Task 4</a>
+    <a href="task5.html">Task 5</a>
+    <a href="task6.html">Task 6</a>
+
+    <script>
+        function submitQuiz() {
+            const correctAnswers = {
+                q1: 'Paris',
+                q2: 'Mars',
+                q3: 'cs 1.6'
+            };
+
+            let score = 0;
+
+            for (const question in correctAnswers) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    if (userAnswer === correctAnswers[question]) {
+                        score++;
+                    }
+                }
+            }
+
+            const resultContainer = document.getElementById('result');
+            resultContainer.textContent = `Your score: ${score} out of ${Object.keys(correctAnswers).length}`;
+        }
+    </script>
+</body>
+
+</html>
